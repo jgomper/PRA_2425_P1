@@ -4,15 +4,15 @@ template <typename T>
 class Node {
     public:
         // Miembros de datos
-        T value;  // Valor del nodo
+        T data;  // Valor del nodo
         Node* next;  // Puntero al siguiente nodo
 
-        // Constructor
-        Node(T val) : value(val), next(nullptr) {}
+        // Constructor (modificado para aceptar valor y puntero al siguiente nodo)
+        Node(T val, Node* nextNode = nullptr) : data(val), next(nextNode) {}
 
         // Destructor
         ~Node() {
-            // Si quieres implementar algún tipo de limpieza, hazlo aquí
+            // Aquí podrías liberar recursos si fuera necesario
         }
 
         // Método para establecer el siguiente nodo
@@ -27,12 +27,12 @@ class Node {
 
         // Método para obtener el valor del nodo
         T getValue() const {
-            return value;
+            return data;
         }
 
         // Método para imprimir el nodo (opcional)
         void print(std::ostream& out) const {
-            out << value;
+            out << data;
         }
 };
 
