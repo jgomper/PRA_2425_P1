@@ -1,22 +1,38 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include <stdexcept>
+
+// Clase abstracta pura y genérica List<T>
 template <typename T>
 class List {
-    public:
-        virtual void insert(const T& element) = 0;       // Método puro para insertar un elemento en la lista
-	virtual void append(const T& element) = 0;       // Añade un elemento al final de la lista
-        virtual void prepend(const T& element) = 0;      // Añade un elemento al principio de la lista
+public:
+    // Inserta el elemento e en la posición pos
+    virtual void insert(int pos, T e) = 0;
 
-        virtual T remove() = 0;                          // Método puro para remover un elemento de la lista
-        virtual T get(int index) const = 0;              // Método puro para obtener un elemento en un índice específico
-	virtual int search(const T& element) const = 0;  // Busca un elemento y devuelve su índice o -1 si no existe
+    // Inserta el elemento e al final de la lista
+    virtual void append(T e) = 0;
 
-	virtual bool isEmpty() const = 0;                // Método puro para verificar si la lista está vacía
-        virtual int size() const = 0;                    // Método puro para obtener el tamaño de la lista
-	virtual ~List() {}                               // Destructor virtual para limpieza adecuada
+    // Inserta el elemento e al principio de la lista
+    virtual void prepend(T e) = 0;
 
+    // Elimina y devuelve el elemento situado en la posición pos
+    virtual T remove(int pos) = 0;
 
+    // Devuelve el elemento situado en la posición pos
+    virtual T get(int pos) = 0;
+
+    // Devuelve la posición de la primera ocurrencia del elemento e, o -1 si no se encuentra
+    virtual int search(T e) = 0;
+
+    // Indica si la lista está vacía
+    virtual bool empty() = 0;
+
+    // Devuelve el número de elementos de la lista
+    virtual int size() = 0;
+
+    // Destructor virtual puro
+    virtual ~List() = default;
 };
 
 #endif
