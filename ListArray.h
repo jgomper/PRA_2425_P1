@@ -105,7 +105,7 @@ public:
 
     // Sobrecarga del operador <<
     friend std::ostream& operator<<(std::ostream& out, const ListArray<T>& list) {
-        out << "[";
+        out << "List => [";
         for (int i = 0; i < list.n; ++i) {
             out << list.arr[i];
             if (i < list.n - 1) {
