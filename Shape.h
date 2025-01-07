@@ -3,43 +3,32 @@
 
 #include <string>
 #include <stdexcept>
-#include <iostream>
-#include "Point2D.h"
 
 class Shape {
 protected:
-    std::string color; // Color de la figura: "red", "green", "blue"
+    std::string color;
 
 public:
     // Constructor por defecto
-    Shape() : color("red") {}
+    Shape();
 
-    // Constructor con color
-    Shape(const std::string& color) {
-        set_color(color); // Valida y asigna el color
-    }
+    // Constructor con validación de color
+    Shape(const std::string& color);
 
-    // Devuelve el color de la figura
-    std::string get_color() const {
-        return color;
-    }
+    // Devuelve el color actual
+    std::string get_color() const;
 
-    // Modifica el color de la figura
-    void set_color(const std::string& c) {
-        if (c != "red" && c != "green" && c != "blue") {
-            throw std::invalid_argument("Color inválido. Los colores válidos son: red, green, blue.");
-        }
-        color = c;
-    }
+    // Modifica el color de la figura (validación incluida)
+    void set_color(const std::string& c);
+
+    // Destructor virtual
+    virtual ~Shape() = default;
 
     // Métodos virtuales puros
-    virtual double area() const = 0;           // Calcula el área de la figura
-    virtual double perimeter() const = 0;     // Calcula el perímetro de la figura
-    virtual void translate(double incX, double incY) = 0; // Traslada la figura
-    virtual void print() const = 0;           // Imprime información básica sobre la figura
-
-    // Virtual destructor
-    virtual ~Shape() = default;
+    virtual double area() const = 0;
+    virtual double perimeter() const = 0;
+    virtual void translate(double incX, double incY) = 0;
+    virtual void print() = 0;
 };
 
 #endif
