@@ -1,67 +1,119 @@
-#ifndef LISTARRAY_H
-#define LISTARRAY_H
-
-#include "List.h"
-#include <iostream>
+#include <ostream>
 #include <stdexcept>
-
-
+#include "List.h"
 
 template <typename T>
-class ListArray {
+class ListArray : public List<T> {
 private:
-    T* array;
-    int size;
-    int capacity;
+    T* arr;                  // Puntero al inicio del array
+    int max;                 // Tamaño actual del array
+    int n;                   // Número de elementos en la lista
+    static const int MINSIZE = 2; // Tamaño mínimo del array
 
-    void resize(int new_capacity) {
-        T* new_array = new T[new_capacity];
-        for (int i = 0; i < size; ++i) {
-            new_array[i] = array[i];
+    void resize(int new_size) {
+        T* new_arr = new T[new_size];
+        for (int i = 0; i < n; ++i) {
+            new_arr[i] = arr[i];
         }
-        delete[] array;
-        array = new_array;
-        capacity = new_capacity;
+        delete[] arr;
+        arr = new_arr;
+        max = new_size;
     }
 
 public:
-    ListArray() : size(0), capacity(10) {
-        array = new T[capacity];
-    }
+    // Constructor
+    ListArray() : arr(new T[MINSIZE]), max(MINSIZE), n(0) {}
 
+    // Destructor
     ~ListArray() {
-        delete[] array;
+        delete[] arr;
     }
 
-    void insert(const T& value) {
-        if (size == capacity) {
-            resize(capacity * 2);
+    // Inserta el elemento e en la posición pos
+    void insert(int pos, T e) override {
+        if (pos < 0 || pos > n) {
+            throw std::out_of_range("Posición fuera de rango");
         }
-        array[size++] = value;
-    }
-
-    T& operator[](int index) {
-        if (index < 0 || index >= size) {
-            throw std::out_of_range("Index out of range");
+        if (n == max) {
+            resize(max * 2);
         }
-        return array[index];
-    }
-
-    void print() const {
-        for (int i = 0; i < size; ++i) {
-            std::cout << array[i] << " ";
+        for (int i = n; i > pos; --i) {
+            arr[i] = arr[i - 1];
         }
-        std::cout << std::endl;
+        arr[pos] = e;
+        ++n;
     }
 
-    int getSize() const {
-        return size;
+    // Inserta el elemento e al final de la lista
+    void append(T e) override {
+        insert(n, e);
     }
 
-    int getCapacity() const {
-        return capacity;
+    // Inserta el elemento e al principio de la lista
+    void prepend(T e) override {
+        insert(0, e);
+    }
+
+    // Elimina y devuelve el elemento situado en la posición pos
+    T remove(int pos) override {
+        if (pos < 0 || pos >= n) {
+            throw std::out_of_range("Posición fuera de rango");
+        }
+        T removed = arr[pos];
+        for (int i = pos; i < n - 1; ++i) {
+            arr[i] = arr[i + 1];
+        }
+        --n;
+        if (n < max / 4 && max > MINSIZE) {
+            resize(max / 2);
+        }
+        return removed;
+    }
+
+    // Devuelve el elemento situado en la posición pos
+    T get(int pos) override {
+        if (pos < 0 || pos >= n) {
+            throw std::out_of_range("Posición fuera de rango");
+        }
+        return arr[pos];
+    }
+
+    // Devuelve la posición de la primera ocurrencia del elemento e, o -1 si no se encuentra
+    int search(T e) override {
+        for (int i = 0; i < n; ++i) {
+            if (arr[i] == e) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // Indica si la lista está vacía
+    bool empty() override {
+        return n == 0;
+    }
+
+    // Devuelve el número de elementos de la lista
+    int size() override {
+        return n;
+    }
+
+    // Sobrecarga del operador []
+    T operator[](int pos) {
+        return get(pos);
+    }
+
+    // Sobrecarga del operador <<
+    friend std::ostream& operator<<(std::ostream& out, const ListArray<T>& list) {
+        out << "[";
+        for (int i = 0; i < list.n; ++i) {
+            out << list.arr[i];
+            if (i < list.n - 1) {
+                out << ", ";
+            }
+        }
+        out << "]";
+        return out;
     }
 };
-
-#endif
 
