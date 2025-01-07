@@ -27,5 +27,25 @@ Shape.o: Shape.cpp Shape.h
 	g++ -c Shape.cpp
 
 
+Circle.o: Circle.cpp Circle.h
+	g++ -c Circle.cpp
+
+
+bin/testCircle: testCircle.cpp Circle.o Shape.o Point2D.o
+	g++ -c testCircle.cpp
+	mkdir -p bin
+	g++ -o bin/testCircle testCircle.o Circle.o Shape.o Point2D.o
+
+
+Rectangle.o: Rectangle.cpp Rectangle.h Point2D.h Shape.h
+	g++ -c Rectangle.cpp -o Rectangle.o
+
+
+bin/testRectangle: testRectangle.cpp Rectangle.o Shape.o Point2D.o
+	g++ -c testRectangle.cpp
+	mkdir -p bin
+	g++ -o bin/testRectangle testRectangle.o Rectangle.o Shape.o Point2D.o
+
+
 clean:
 	rm -r *.o *.gch bin
