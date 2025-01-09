@@ -53,7 +53,7 @@ void Circle::translate(double incX, double incY) {
 }
 
 // Implementación de print()
-void Circle::print() const {
+void Circle::print() const{
     std::cout << "Circle:(color =  " << get_color() 
               << ", center = (" << center.x << ", " << center.y << ")"
               << ", radius = " << radius << ")" << std::endl;
