@@ -34,7 +34,7 @@ public:
     double area() const override;                // Calcula el área del círculo
     double perimeter() const override;          // Calcula el perímetro del círculo
     void translate(double incX, double incY) override; // Traslada el círculo
-    void print() override;                      // Imprime la información del círculo
+    void print() const override;                      // Imprime la información del círculo
 
     // Sobrecarga global del operador <<
     friend std::ostream& operator<<(std::ostream& out, const Circle& c);
