@@ -12,6 +12,13 @@ public:
     // Constructor
     Point2D(double x = 0, double y = 0);
 
+    // Métodos de acceso (getters y setters)
+    double getX() const { return x; }
+    void setX(double val) { x = val; }
+
+    double getY() const { return y; }
+    void setY(double val) { y = val; }
+
     // Métodos estáticos
     static double distance(const Point2D &a, const Point2D &b);
 
